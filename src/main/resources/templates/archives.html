@@ -1,0 +1,214 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title th:text="${title}"></title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" type="text/css" href="./css/index.css" media="all" />
+    <style>
+        #archives a:hover {
+            color: #13c11b;
+        }
+    </style>
+</head>
+
+<body class="home blog custom-background round-avatars">
+<div class="Yarn_Background" style="background-image: url( ./images/47fb3c_.jpg);"></div>
+
+<div class="navi" data-aos="fade-down">
+    <div class="bt-nav">
+        <div class="line line1"></div>
+        <div class="line line2"></div>
+        <div class="line line3"></div>
+    </div>
+    <div class="navbar animated fadeInRight">
+        <div class="inner">
+            <nav id="site-navigation" class="main-navigation">
+                <div id="main-menu" class="main-menu-container">
+                    <div class="menu-menu-container">
+                        <ul id="primary-menu" class="menu">
+                            <li id="menu-item-17" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-17">
+                                <a href="/">首页</a>
+                            </li>
+<!--                            <li id="menu-item-173" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-173">-->
+<!--                                <a href="/category">分类</a>-->
+<!--                            </li>-->
+                            <li id="menu-item-78" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item menu-item-78">
+                                <a href="/archives">归档</a>
+                            </li>
+                            <li id="menu-item-252" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-252">
+                                <a href="/about">关于</a>
+                            </li>
+                            <li id="menu-item-57" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-57">
+                                <a id="login" href="/login">登录</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- #site-navigation -->
+        </div>
+    </div>
+</div>
+
+<header id="masthead" class="overlay animated from-bottom" itemprop="brand">
+    <div class="site-branding text-center">
+        <a href="">
+            <figure>
+                <img class="custom-logo avatar" src="./images/omikron.png" />
+            </figure>
+        </a>
+        <h3 class="blog-description"><p th:text="${title}"></p></h3>
+    </div>
+    <!-- .site-branding -->
+    <div class="decor-part">
+        <div id="particles-js"></div>
+    </div>
+    <div class="animation-header">
+        <div class="decor-wrapper">
+            <svg id="header-decor" class="decor bottom" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path class="large left" d="M0 0 L50 50 L0 100" fill="rgba(255,255,255, .1)"></path>
+                <path class="large right" d="M100 0 L50 50 L100 100" fill="rgba(255,255,255, .1)"></path>
+                <path class="medium left" d="M0 100 L50 50 L0 33.3" fill="rgba(255,255,255, .3)"></path>
+                <path class="medium right" d="M100 100 L50 50 L100 33.3" fill="rgba(255,255,255, .3)"></path>
+                <path class="small left" d="M0 100 L50 50 L0 66.6" fill="rgba(255,255,255, .5)"></path>
+                <path class="small right" d="M100 100 L50 50 L100 66.6" fill="rgba(255,255,255, .5)"></path>
+                <path d="M0 99.9 L50 49.9 L100 99.9 L0 99.9" fill="rgba(255,255,255, 1)"></path>
+                <path d="M48 52 L50 49 L52 52 L48 52" fill="rgba(255,255,255, 1)"></path>
+            </svg>
+        </div>
+    </div>
+</header>
+<div id="main" class="content">
+    <div class="container">
+        <section class="post_content" itemscope itemtype="http://schema.org/Article">
+            <header class="post_header">
+                <h1 class="post_title">归档</h1>
+            </header>
+            <div class="post-Archive">
+                <div id="archives">
+
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<footer id="footer" class="overlay animated from-top">
+    <div class="decor-wrapper">
+        <svg id="footer-decor" class="decor top" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path class="large left" d="M0 0 L50 50 L0 100" fill="rgba(255,255,255, .1)"></path>
+            <path class="large right" d="M100 0 L50 50 L100 100" fill="rgba(255,255,255, .1)"></path>
+            <path class="medium left" d="M0 0 L50 50 L0 66.6" fill="rgba(255,255,255, .3)"></path>
+            <path class="medium right" d="M100 0 L50 50 L100 66.6" fill="rgba(255,255,255, .3)"></path>
+            <path class="small left" d="M0 0 L50 50 L0 33.3" fill="rgba(255,255,255, .5)"></path>
+            <path class="small right" d="M100 0 L50 50 L100 33.3" fill="rgba(255,255,255, .5)"></path>
+            <path d="M0 0 L50 50 L100 0 L0 0" fill="rgba(255,255,255, 1)"></path>
+            <path d="M48 48 L50 51 L52 48 L48 48" fill="rgba(255,255,255, 1)"></path>
+        </svg>
+    </div>
+    <div class="socialize" data-aos="zoom-in">
+        <li>
+            <a title="weibo" class="socialicon" href=""><i class="iconfont" aria-hidden="true">&#xe601;</i></a>
+        </li>
+        <li>
+            <a title="WeChat" class="socialicon" href=""><i class="iconfont" aria-hidden="true">&#xe609;</i></a>
+        </li>
+        <li>
+            <a title="QQ" class="socialicon" href="" target="_blank"><i class="iconfont" aria-hidden="true">&#xe616;</i></a>
+        </li>
+    </div>
+    <div class="cr">
+        Copyright&copy;2020. Powered by
+        <a href="https://mapletown.xyz">Oxygen</a>
+    </div>
+    <script type="text/javascript"
+            src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <script type='text/javascript' src='./js/jquery.min.js'></script>
+    <script type='text/javascript' src='./js/plugins.js'></script>
+    <script type='text/javascript' src='./js/script.js'></script>
+    <script type='text/javascript' src='./js/particles.js'></script>
+    <script type='text/javascript' src='./js/aos.js'></script>
+    <script src="./lib/layui-v2.5.5/layui.js"></script>
+    <script src="./js/util.js"></script>
+    <script>
+        layui.use(['layer', 'jquery'], function () {
+            var layer = layui.layer,
+                $ = layui.$,
+                userInfo = JSON.parse(getCookie("user"));
+
+            if(userInfo) {
+                $("#login").text("我的账户");
+                $("#login").attr('href', '/admin');
+            } else {
+                $("#login").text("登录");
+                $("#login").attr('href', '/login');
+            }
+
+            var count = 10;
+            $.ajax({
+                url: "/content/getPublicByPage",
+                async: false,
+                method: "GET",
+                data: {"page": 1, "limit": 1},
+                success: function (res) {
+                    count = res.count;
+                },
+                error: function (res) {
+                    console.log(res);
+                }
+            });
+
+            var txt = ['<div class=\'archive-title\'>' +
+                '<h3>{0}</h3><div class=\'archives archives-3\' data-date=\'{1}\'>' +
+                '<div class="brick">',
+
+                '<a href="/detail.html?cid={0}"><span class="time">{1}</span>{2}<span>({3})</span></a>',
+
+                '</div></div></div>'];
+
+            var index = layer.load();
+            $.ajax({
+                url: "/content/getPublicByPage",
+                method: "GET",
+                data: {"page": 1, "limit": count},
+                success: function (res) {
+                    var data = res.data;
+                    var date = new Set();
+                    for (var i = 0; i < data.length; i++) {
+                        var t = data[i].created.split(" ")[0].split("/");
+                        data[i].created = t[0] + '-' + t[1];
+                        data[i].date = t[1] + '-' + t[2];
+                        date.add(data[i].created);
+                    }
+                    var html = "";
+                    for(var i of date) {
+                        html += txt[0].format(i, i);
+                        for(var j of data){
+                            if (j.created === i) {
+                                html += txt[1].format(j.cid, j.date, j.title, j.commentNum);
+                            }
+                        }
+                        html += txt[2];
+                    }
+
+                    $("#archives")[0].innerHTML = html;
+                    layer.close(index);
+                },
+                error: function (res) {
+                    console.log(res);
+                    layer.close(index);
+                    layer.msg("出现错误");
+                }
+            });
+        });
+    </script>
+</footer>
+
+</body>
+
+</html>

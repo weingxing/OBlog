@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oxygen.oblog.dao.CommentMapper" >
+  <resultMap id="BaseResultMap" type="com.oxygen.oblog.entity.Comment" >
+    <id column="coid" property="coid" jdbcType="INTEGER" />
+    <result column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="parent" property="parent" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="ResultMapWithBLOBs" type="com.oxygen.oblog.entity.Comment" extends="BaseResultMap" >
+    <result column="text" property="text" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    coid, cid, created, author, email, ip, status, parent
+  </sql>
+
+  <sql id="Blob_Column_List" >
+    text
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from comment
+    where coid = #{coid,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAll" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from comment order by coid DESC
+  </select>
+
+  <select id="selectAllPublic" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from comment where status='public' order by coid DESC
+  </select>
+
+  <select id="selectAllReviewed" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from comment where status='reviewed' order by coid DESC
+  </select>
+
+  <select id="selectPageByCid" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from comment where status='public' and cid=#{cid,jdbcType=INTEGER} order by coid DESC
+  </select>
+
+  <select id="selectMyComment" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from comment where author=#{author,jdbcType=VARCHAR} order by coid DESC
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from comment
+    where coid = #{coid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.oxygen.oblog.entity.Comment" >
+    insert into comment (coid, cid, created,
+      author, email, ip,
+      status, parent, text
+      )
+    values (#{coid,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, #{created,jdbcType=VARCHAR},
+      #{author,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR},
+      #{status,jdbcType=VARCHAR}, #{parent,jdbcType=VARCHAR}, #{text,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.oxygen.oblog.entity.Comment" >
+    insert into comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="coid != null" >
+        coid,
+      </if>
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="parent != null" >
+        parent,
+      </if>
+      <if test="text != null" >
+        text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="coid != null" >
+        #{coid,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="parent != null" >
+        #{parent,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null" >
+        #{text,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.oxygen.oblog.entity.Comment" >
+    update comment
+    <set >
+      <if test="cid != null" >
+        cid = #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="parent != null" >
+        parent = #{parent,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null" >
+        text = #{text,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where coid = #{coid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.oxygen.oblog.entity.Comment" >
+    update comment
+    set cid = #{cid,jdbcType=INTEGER},
+      created = #{created,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      parent = #{parent,jdbcType=VARCHAR},
+      text = #{text,jdbcType=LONGVARCHAR}
+    where coid = #{coid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.oxygen.oblog.entity.Comment" >
+    update comment
+    set cid = #{cid,jdbcType=INTEGER},
+      created = #{created,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      parent = #{parent,jdbcType=VARCHAR}
+    where coid = #{coid,jdbcType=INTEGER}
+  </update>
+</mapper>

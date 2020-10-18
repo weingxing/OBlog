@@ -1,0 +1,294 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title th:text="${title}"></title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" type="text/css" href="./css/index.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="./lib/layui-v2.5.5/css/layui.css"/>
+    <style rel="stylesheet" type="text/css">
+        p {
+            font-size: 16px;
+            line-height: 200%;
+        }
+        span {
+            font-weight: bold;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body class="home blog custom-background round-avatars">
+<div class="Yarn_Background" style="background-image: url( ./images/47fb3c_.jpg);"></div>
+
+<div class="navi" data-aos="fade-down">
+    <div class="bt-nav">
+        <div class="line line1"></div>
+        <div class="line line2"></div>
+        <div class="line line3"></div>
+    </div>
+    <div class="navbar animated fadeInRight">
+        <div class="inner">
+            <nav id="site-navigation" class="main-navigation">
+                <div id="main-menu" class="main-menu-container">
+                    <div class="menu-menu-container">
+                        <ul id="primary-menu" class="menu">
+                            <li id="menu-item-17" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-17">
+                                <a href="/">首页</a>
+                            </li>
+<!--                            <li id="menu-item-173" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-173">-->
+<!--                                <a href="/category">分类</a>-->
+<!--                            </li>-->
+                            <li id="menu-item-78" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-78">
+                                <a href="/archives">归档</a>
+                            </li>
+                            <li id="menu-item-252" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children current-menu-item current_page_item menu-item-252">
+                                <a href="/about">关于</a>
+                            </li>
+                            <li id="menu-item-57" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-57">
+                                <a id="login" href="/login">登录</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- #site-navigation -->
+        </div>
+    </div>
+</div>
+
+<header id="masthead" class="overlay animated from-bottom" itemprop="brand">
+    <div class="site-branding text-center">
+        <a href="">
+            <figure>
+                <img class="custom-logo avatar" src="./images/omikron.png" />
+            </figure>
+        </a>
+        <h3 class="blog-description"><p th:text="${title}"></p></h3>
+    </div>
+    <!-- .site-branding -->
+    <div class="decor-part">
+        <div id="particles-js"></div>
+    </div>
+    <div class="animation-header">
+        <div class="decor-wrapper">
+            <svg id="header-decor" class="decor bottom" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path class="large left" d="M0 0 L50 50 L0 100" fill="rgba(255,255,255, .1)"></path>
+                <path class="large right" d="M100 0 L50 50 L100 100" fill="rgba(255,255,255, .1)"></path>
+                <path class="medium left" d="M0 100 L50 50 L0 33.3" fill="rgba(255,255,255, .3)"></path>
+                <path class="medium right" d="M100 100 L50 50 L100 33.3" fill="rgba(255,255,255, .3)"></path>
+                <path class="small left" d="M0 100 L50 50 L0 66.6" fill="rgba(255,255,255, .5)"></path>
+                <path class="small right" d="M100 100 L50 50 L100 66.6" fill="rgba(255,255,255, .5)"></path>
+                <path d="M0 99.9 L50 49.9 L100 99.9 L0 99.9" fill="rgba(255,255,255, 1)"></path>
+                <path d="M48 52 L50 49 L52 52 L48 52" fill="rgba(255,255,255, 1)"></path>
+            </svg>
+        </div>
+    </div>
+</header>
+<div id="main" class="content">
+    <div class="container">
+        <section class="post_content" itemscope itemtype="http://schema.org/Article">
+            <header class="post_header">
+                <h1 class="post_title">关于博客</h1>
+            </header>
+            <div>
+
+                    <p>
+                        博客是博主私人化的附属。这里分享博主本人的相关记录，学习、生活、生意、思想……，记录个人成长。
+                    </p>
+                    <p>
+                        博客的宗旨就是分享知识，不一定高深、不一定简单、但一定是作者用心写出来的。
+                    </p>
+                    <p>
+                        所有人都是从小白做起的，在学习知识的过程中，总会遇到各种困难，这个时候，
+                        如果可以借鉴别人的经验，会让我们省力不少。希望我的博客能在你需要的时候帮助到你。
+                    </p>
+            </div>
+
+            <hr class="hr"/>
+
+            <header class="post_header">
+                <h1 class="post_title">关于博主</h1>
+            </header>
+            <div>
+                <p>网名：Oxygen</p>
+                <p>职业：Student</p>
+                <p>学历：Undergraduate</p>
+                <p>个人站点：<a href="https://www.mapletown.xyz">https://www.mapletown.xyz</a></p>
+                <p>目前所在：山东</p>
+                <p>邮箱：oxygen@mapletown.xyz</p>
+                <fieldset class="layui-elem-field">
+                    <legend>掌握的技术</legend>
+                    <div class="layui-field-box">
+                        <div>
+                            <span>各种软件安装与卸载：</span><div id="install"></div>
+                        </div>
+                        <div>
+                            <span>C/C++：</span><div id="cpp"></div>
+                        </div>
+                        <div>
+                            <span>Java：</span><div style="display: inline-block;" id="java"></div>
+                        </div>
+                        <div>
+                            <span>Python：</span><div id="python"></div>
+                        </div>
+                        <div>
+                            <span>机器学习：</span><div id="ml"></div>
+                        </div>
+                        <div>
+                            <span>Linux：</span><div id="linux"></div>
+                        </div>
+                        <div>
+                            <span>Spring：</span><div id="spring"></div>
+                        </div>
+                        <div>
+                            <span>Hadoop：</span><div id="hadoop"></div>
+                        </div>
+                    </div>
+                </fieldset>
+
+            </div>
+            <hr class="hr" />
+
+
+            <header class="post_header">
+                <h1 class="post_title">关于版权</h1>
+            </header>
+            <p>
+                <a rel="license"
+                   href="//www.fghrsh.net/?sf_urldecode=aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"
+                   sf_file="1" target="_blank">
+                    <img alt="知识共享许可协议" style="border-width:0;clear: both;display: block;margin: auto;"
+                         src="https://cdn.fghrsh.net/blogcdn/2015/11/201511142942_6898.png">
+                </a>
+                <br>
+                如无注明，本站所有文章均采用&nbsp;
+                <a rel="license" href="//www.fghrsh.net/?sf_urldecode=aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"
+                   sf_file="1" target="_blank">
+                    知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+                </a>&nbsp;共享，
+            </p>
+
+            <p>
+                原创文章版权归本博客所有，转载请注明出处。
+                <span style="color: #FF0000;">未经作者同意必须在文章页面明显位置给出原文链接，否则保留追究法律责任的权利。</span>
+            </p>
+            <blockquote>
+                <h3 class="h3" style="font-weight: bold;">
+                    本博客接受投稿，您可以<a href="/register">注册</a>并<a href="/login">登录</a>后
+                    进行投稿，文章通过审核后版权贵本博客所有。
+                </h3>
+            </blockquote>
+            <hr class="hr" />
+
+        </section>
+    </div>
+</div>
+
+<footer id="footer" class="overlay animated from-top">
+    <div class="decor-wrapper">
+        <svg id="footer-decor" class="decor top" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path class="large left" d="M0 0 L50 50 L0 100" fill="rgba(255,255,255, .1)"></path>
+            <path class="large right" d="M100 0 L50 50 L100 100" fill="rgba(255,255,255, .1)"></path>
+            <path class="medium left" d="M0 0 L50 50 L0 66.6" fill="rgba(255,255,255, .3)"></path>
+            <path class="medium right" d="M100 0 L50 50 L100 66.6" fill="rgba(255,255,255, .3)"></path>
+            <path class="small left" d="M0 0 L50 50 L0 33.3" fill="rgba(255,255,255, .5)"></path>
+            <path class="small right" d="M100 0 L50 50 L100 33.3" fill="rgba(255,255,255, .5)"></path>
+            <path d="M0 0 L50 50 L100 0 L0 0" fill="rgba(255,255,255, 1)"></path>
+            <path d="M48 48 L50 51 L52 48 L48 48" fill="rgba(255,255,255, 1)"></path>
+        </svg>
+    </div>
+    <div class="socialize" data-aos="zoom-in">
+        <li>
+            <a title="weibo" class="socialicon" href=""><i class="iconfont" aria-hidden="true">&#xe601;</i></a>
+        </li>
+        <li class="wechat">
+            <a class="socialicon"><i class="iconfont">&#xe609;</i></a>
+            <div class="wechatimg"><img src="./images/49D3746D-7519-B709-83E4-65BD1927C4E7.jpg"></div>
+        </li>
+        <li>
+            <a title="QQ" class="socialicon" href="" target="_blank"><i class="iconfont" aria-hidden="true">&#xe616;</i></a>
+        </li>
+    </div>
+    <div class="cr">
+        Copyright&copy;2020. Powered by
+        <a href="https://mapletown.xyz">Oxygen</a>
+    </div>
+    <script type='text/javascript' src='./js/jquery.min.js'></script>
+    <script type='text/javascript' src='./js/plugins.js'></script>
+    <script type='text/javascript' src='./js/script.js'></script>
+    <script type='text/javascript' src='./js/particles.js'></script>
+    <script type='text/javascript' src='./js/aos.js'></script>
+    <script src="./lib/layui-v2.5.5/layui.js"></script>
+    <script src="/js/util.js"></script>
+    <script>
+        layui.use(['rate'], function(){
+            var rate = layui.rate,
+                userInfo = JSON.parse(getCookie("user"));
+
+            if(userInfo) {
+                $("#login").text("我的账户");
+                $("#login").attr('href', '/admin');
+            } else {
+                $("#login").text("登录");
+                $("#login").attr('href', '/login');
+            }
+
+            rate.render({
+                elem: '#install'
+                ,value: 5
+                ,readonly: true
+                ,half: true
+            });
+            rate.render({
+                elem: '#linux'
+                ,value: 3.5
+                ,readonly: true
+                ,half: true
+            });
+            rate.render({
+                elem: '#spring'
+                ,value: 3.5
+                ,readonly: true
+                ,half: true
+            });
+            rate.render({
+                elem: '#hadoop'
+                ,value: 3
+                ,readonly: true
+                ,half: true
+            });
+            rate.render({
+                elem: '#cpp'
+                ,value: 3
+                ,readonly: true
+                ,half: true
+            });
+            rate.render({
+                elem: '#java'
+                ,value: 3.5
+                ,readonly: true
+                ,half: true
+            });
+            rate.render({
+                elem: '#python'
+                ,value: 4
+                ,readonly: true
+                ,half: true
+            });
+            rate.render({
+                elem: '#ml'
+                ,value: 2
+                ,readonly: true
+                ,half: true
+            });
+
+        });
+    </script>
+</footer>
+</body>
+
+</html>

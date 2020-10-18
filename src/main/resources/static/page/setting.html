@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>系统设置</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <style>
+        .layui-form-item .layui-input-company {width: auto;padding-right: 10px;line-height: 38px;}
+    </style>
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <div class="layui-form layuimini-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label required">网站名称</label>
+                <div class="layui-input-block">
+                    <input id="sitename" type="text" name="title" lay-verify="required" lay-reqtext="网站域名不能为空" placeholder="请输入网站名称"  value="" class="layui-input">
+                    <tip>填写自己网站的名称。</tip>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label required">网站域名</label>
+                <div class="layui-input-block">
+                    <input id="domain" type="text" name="site_url" lay-verify="required" lay-reqtext="网站域名不能为空" placeholder="请输入网站域名"  value="" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">META关键词</label>
+                <div class="layui-input-block">
+                    <textarea id="keywords" name="keywords" class="layui-textarea" placeholder="多个关键词用英文 , 分割"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">META描述</label>
+                <div class="layui-input-block">
+                    <textarea id="descript" name="description" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">网易云歌单id</label>
+                <div class="layui-input-block">
+                    <input id="music" name="music" class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮件通知</label>
+                <div class="layui-input-block">
+                    <input id="notify" type="checkbox" name="notify" lay-skin="switch" lay-text="开|关">
+                </div>
+                <div class="layui-input-block"><tip>当收到新的评论和文章投稿时发送邮件通知。</tip></div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn layui-btn-normal" lay-submit lay-filter="setting">确认保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'miniTab'], function () {
+        var form = layui.form,
+            $ = layui.$,
+            miniTab = layui.miniTab,
+            layer = layui.layer;
+
+        $.ajax({
+            url: "/options/getAllOptions",
+            method: "GET",
+            success: function (res) {
+                $("#sitename").attr("value", res.content.title);
+                $("#domain").attr("value", res.content.site_url);
+                $("#keywords").text(res.content.keywords);
+                $("#descript").text(res.content.description);
+                $("#music").attr("value", res.content.music);
+                if(res.content.notify === '1')
+                    $("#notify").next().click();
+
+            },
+            error: function (res) {
+                layer.msg("发生错误");
+                console.error(res);
+            }
+        });
+
+
+        //监听提交
+        form.on('submit(setting)', function (data) {
+            if (data.field.notify)
+                data.field.notify = 1;
+            else
+                data.field.notify = 0;
+
+            $.ajax({
+                url: "/options/updateAllOptions",
+                method: "POST",
+                data: data.field,
+                success: function (res) {
+                    if (res.content) {
+                        layer.msg("修改成功");
+                        setTimeout(function () {
+                            miniTab.deleteCurrentByIframe();
+                        }, 2000);
+                    } else {
+                        layer.msg("部分内容修改失败，如若要打开邮件通知，请先设置SMTP");
+                    }
+                },
+                error: function (res) {
+                    layer.msg("修改失败");
+                    console.error(res);
+                }
+            });
+            return false;
+        });
+
+    });
+</script>
+</body>
+</html>

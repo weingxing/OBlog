@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title th:text="${title}"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./lib/layui-v2.5.5/css/layui.css" />
+    <link rel="stylesheet" type="text/css" href="./css/web.css" />
+</head>
+
+<body>
+<div class="layui-container">
+    <div class="layui-login layui-anim layui-anim-scale">
+        <div class="layui-top-title">
+            <h3 th:text="${title}"></h3>
+        </div>
+        <div class="layui-login-form">
+            <form class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><i class="layui-icon layui-icon-username"></i></label>
+                    <div class="layui-input-block">
+                        <input id="name" type="text" name="userName" required lay-verify="username" placeholder="用户名/账号"
+                               autocomplete="off" class="layui-input">
+                        <i id="tip"></i>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><i class="layui-icon layui-icon-user"></i></label>
+                    <div class="layui-input-block">
+                        <input type="text" name="nick" required lay-verify="nick" placeholder="昵称"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><i class="layui-icon layui-icon-password"></i></label>
+                    <div class="layui-input-block">
+                        <input type="password" name="password" required lay-verify="password" placeholder="密码"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><i class="layui-icon layui-icon-password"></i></label>
+                    <div class="layui-input-block">
+                        <input type="password" name="password2" required lay-verify="password2" placeholder="重复密码"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><i class="layui-icon layui-icon-release"></i></label>
+                    <div class="layui-input-block">
+                        <input type="text" name="email" required lay-verify="email" placeholder="电子邮箱"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <!-- 懒得写布局，这个div只是用来占空 -->
+                <div class="layui-form-item ">
+                    <div class="layui-form-checkbox">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button id="register" class="layui-btn layui-btn-fluid" lay-submit lay-filter="register">立即注册</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="./lib/layui-v2.5.5/layui.js" type="text/javascript" charset="utf-8"></script>
+<script src="./js/jsencrypt.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="./js/util.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    layui.use(['form', 'layer', 'jquery'], function() {
+        var form = layui.form;
+        var layer = layui.layer;
+        var $ = layui.jquery;
+        var password = null;
+        //验证规则
+        form.verify({
+            username: function(value) {
+                if(value.length === 0) {
+                    return '请输入用户名';
+                }
+            },
+            password: function(value) {
+                if(value.length === 0) {
+                    return '请输入密码';
+                } else if (value.length < 6) {
+                    return '密码至少六位';
+                } else {
+                    password = value;
+                }
+            },
+            password2: function(value) {
+                if (password !== value) {
+                    return "两次密码不一样，请检查";
+                }
+            },
+            nick: function (value) {
+                if(value.length === 0) {
+                    return '请输入昵称';
+                }
+            },
+            email: function (value) {
+                var pattern= /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+                if (value.length === 0) {
+                    return "请输入电子邮箱地址";
+                } else if (!pattern.test(value)){
+                    return "请检查电子邮箱格式";
+                }
+            }
+        });
+
+        $("#name").blur(function () {
+            $.ajax({
+                url: "/user/testUsername",
+                data: {username: $("#name").val()},
+                type: "POST",
+                success: function(data){
+                    if (data.content === false) {
+                        $("#tip").text("用户名已存在");
+                        var reg = $("#register");
+                        reg.attr("class", reg.attr("class") + " layui-btn-disabled");
+                        reg.attr("disabled", "disabled");
+                    } else {
+                        $("#tip").text("");
+                        var reg = $("#register");
+                        reg.attr("class", "layui-btn layui-btn-fluid");
+                        reg.removeAttr("disabled");
+                    }
+                },
+                error: function(data){
+                    layer.alert("用户名验证失败");
+                    console.log(data);
+                }
+            });
+        });
+        //监听提交
+        form.on('submit(register)', function(data) {
+            delete data.field.password2;
+
+            data.field.uid = null;
+            data.field.password = encrypted(data.field.password);
+
+            $.ajax({
+                url: "/user/addUser",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data.field),
+                type: "POST",
+                success: function(data){
+                    if (data.content) {
+                        layer.msg("注册成功");
+                        setTimeout(function(){ location.href = "/login"; }, 3000);
+
+                    } else {
+                        layer.msg("注册失败");
+                    }
+                },
+                error:function(data){
+                    layer.alert("注册失败");
+                    console.log(data);
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oxygen.oblog.dao.NotifyMapper" >
+  <resultMap id="BaseResultMap" type="com.oxygen.oblog.entity.Notify" >
+    <id column="nid" property="nid" jdbcType="INTEGER" />
+    <result column="smtp_address" property="smtpAddress" jdbcType="VARCHAR" />
+    <result column="smtp_port" property="smtpPort" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="receiver" property="receiver" jdbcType="VARCHAR" />
+    <result column="ssl" property="ssl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    nid, smtp_address, smtp_port, user_name, password, receiver, `ssl`
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from notify
+    where nid = #{nid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from notify
+    where nid = #{nid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.oxygen.oblog.entity.Notify" >
+    insert into notify (nid, smtp_address, smtp_port, 
+      user_name, password, receiver, 
+      `ssl`)
+    values (#{nid,jdbcType=INTEGER}, #{smtpAddress,jdbcType=VARCHAR}, #{smtpPort,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{receiver,jdbcType=VARCHAR}, 
+      #{ssl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.oxygen.oblog.entity.Notify" >
+    insert into notify
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="nid != null" >
+        nid,
+      </if>
+      <if test="smtpAddress != null" >
+        smtp_address,
+      </if>
+      <if test="smtpPort != null" >
+        smtp_port,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="receiver != null" >
+        receiver,
+      </if>
+      <if test="ssl != null" >
+        `ssl`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="nid != null" >
+        #{nid,jdbcType=INTEGER},
+      </if>
+      <if test="smtpAddress != null" >
+        #{smtpAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="smtpPort != null" >
+        #{smtpPort,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="receiver != null" >
+        #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="ssl != null" >
+        #{ssl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.oxygen.oblog.entity.Notify" >
+    update notify
+    <set >
+      <if test="smtpAddress != null" >
+        smtp_address = #{smtpAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="smtpPort != null" >
+        smtp_port = #{smtpPort,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="receiver != null" >
+        receiver = #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="ssl != null" >
+        `ssl` = #{ssl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where nid = #{nid,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.oxygen.oblog.entity.Notify" >
+    update notify
+    set smtp_address = #{smtpAddress,jdbcType=VARCHAR},
+      smtp_port = #{smtpPort,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      receiver = #{receiver,jdbcType=VARCHAR},
+      `ssl` = #{ssl,jdbcType=VARCHAR}
+    where nid = #{nid,jdbcType=INTEGER}
+  </update>
+</mapper>

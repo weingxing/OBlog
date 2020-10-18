@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">作者</label>
+        <div class="layui-input-block">
+            <input id="author" type="text" name="author" value="" class="layui-input layui-disabled" disabled>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">电子邮箱</label>
+        <div class="layui-input-block">
+            <input id="email" type="email" name="email" class="layui-input layui-disabled" disabled>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">内容</label>
+        <div class="layui-input-block">
+            <textarea id="text" name="text" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">状态</label>
+        <div class="layui-input-block">
+            <input id="public" type="radio" name="status" value="public" title="发布" checked="">
+            <input id="reviewed" type="radio" name="status" value="reviewed" title="审核">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="save">确认保存</button>
+        </div>
+    </div>
+</div>
+<script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="../../js/jsencrypt.min.js"></script>
+<script src="../../js/util.js"></script>
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+
+        var coid = getQueryString("coid");
+
+        $.ajax({
+            url: "/comment/getCommentByCoid",
+            method: "GET",
+            data: {"coid": coid},
+            success: function (res) {
+                var data = res.content;
+                if(data) {
+                    $("#author").attr("value", data.author);
+                    $("#email").attr("value", data.email);
+                    $("#text").text(data.text);
+                }
+            }
+        });
+        //监听提交
+        form.on('submit(save)', function (data) {
+            data.field.coid = coid;
+            // console.log(data.field);
+            $.ajax({
+                url: "/comment/updateComment",
+                method: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(data.field),
+                success: function (res) {
+                    if(res.content) {
+                        layer.msg("修改成功");
+                        setTimeout(function () {
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
+                        }, 1000);
+                    } else {
+                        layer.msg("修改失败");
+                    }
+                },
+                error: function (res) {
+                    layer.msg("修改失败");
+                    console.error(res);
+                }
+            });
+
+            return false;
+        });
+
+        $("#reset_password").click(function () {
+            layer.confirm('确定要重置密码', function (index) {
+                var postData = {
+                    "uid": uid,
+                    "password": encrypted("123456")
+                };
+                $.ajax({
+                    url: "/user/updateUser",
+                    method: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(postData),
+                    success: function (res) {
+                        if (res.content) {
+                            layer.msg("重置成功");
+                        } else {
+                            layer.msg("重置失败");
+                        }
+                        setTimeout(function () {
+                            layer.close(index);
+                        }, 1000);
+                    },
+                    error: function (res) {
+                        layer.msg("重置失败");
+                        setTimeout(function () {
+                            layer.close(index);
+                        }, 1000);
+                    }
+                });
+            });
+
+        });
+    });
+</script>
+</body>
+</html>

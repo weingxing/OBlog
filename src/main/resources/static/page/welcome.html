@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <link rel=stylesheet href=https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css>
+    <link href=../css/app.d99b3d16.css rel=preload as=style>
+    <link href=../js/app.bb39b2ca.js rel=preload as=script>
+    <link href=../js/chunk-vendors.c01fe04d.js rel=preload as=script>
+    <link href=../css/app.d99b3d16.css rel=stylesheet>
+</head>
+<style>
+    .layui-top-box {padding:40px 20px 20px 20px;color:#fff}
+    .panel {margin-bottom:17px;background-color:#fff;border:1px solid transparent;border-radius:3px;-webkit-box-shadow:0 1px 1px rgba(0,0,0,.05);box-shadow:0 1px 1px rgba(0,0,0,.05)}
+    .panel-body {padding:15px}
+    .panel-title {margin-top:0;margin-bottom:0;font-size:14px;color:inherit}
+    .label {display:inline;padding:.2em .6em .3em;font-size:75%;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25em;margin-top: .3em;}
+    .layui-red {color:red}
+    .main_btn > p {height:40px;}
+</style>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main layui-top-box">
+        <div class="layui-row layui-col-space10">
+
+            <div class="layui-col-md3">
+                <div class="col-xs-6 col-md-3">
+                    <div class="panel layui-bg-cyan">
+                        <div class="panel-body">
+                            <div class="panel-title">
+                                <h5>已发布文章</h5>
+                            </div>
+                            <div class="panel-content">
+                                <h1 class="no-margins" id="public_content">null</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-md3">
+                <div class="col-xs-6 col-md-3">
+                    <div class="panel layui-bg-blue">
+                        <div class="panel-body">
+                            <div class="panel-title">
+                                <h5>待审核文章</h5>
+                            </div>
+                            <div class="panel-content">
+                                <h1 class="no-margins" id="reviewed_content">null</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-md3">
+                <div class="col-xs-6 col-md-3">
+                    <div class="panel layui-bg-green">
+                        <div class="panel-body">
+                            <div class="panel-title">
+                                <h5>已发布评论</h5>
+                            </div>
+                            <div class="panel-content">
+                                <h1 class="no-margins" id="public_comment">null</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <div class="col-xs-6 col-md-3">
+                    <div class="panel layui-bg-orange">
+                        <div class="panel-body">
+                            <div class="panel-title">
+                                <h5>待审核评论</h5>
+                            </div>
+                            <div class="panel-content">
+                                <h1 class="no-margins" id="reviewed_comment">null</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-box">
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md12">
+                <noscript>
+                    <strong>We're sorry but blog-web-music doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+                </noscript>
+                <blockquote class="layui-elem-quote" style="margin-bottom: 50px;">
+                    <p>
+                        <b>来首音乐? 当前音乐内容随机来自歌单：
+                            <a target="_blank" id="song" href=""></a>，
+                            如果想修改歌单，请联系博主：<span id="email"></span>
+                        </b>
+                    </p>
+                    <p><b>歌单中部分音乐因版权原因无法播放，请切换下一首</b></p>
+                 </blockquote>
+                <div id=app></div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script src=../js/chunk-vendors.c01fe04d.js></script>
+<script src=../js/app.bb39b2ca.js></script>
+<script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="../js/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            url: "/welcome",
+            method: "GET",
+            success: function (res) {
+                var tmp = JSON.parse(res.content);
+                $("#reviewed_comment").text(tmp.reviewed_comment);
+                $("#reviewed_content").text(tmp.reviewed_content);
+                $("#public_comment").text(tmp.public_comment);
+                $("#public_content").text(tmp.public_content);
+                $("#song").attr("href", "https://music.163.com/#/playlist?id="+tmp.music);
+                $("#song").text("https://music.163.com/#/playlist?id="+tmp.music);
+                $("#email").text(tmp.email);
+            },
+            error: function (res) {
+                console.error(res);
+            }
+        });
+    });
+</script>
+</body>
+</html>

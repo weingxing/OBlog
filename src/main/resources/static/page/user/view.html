@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title id="t"></title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" type="text/css" href="/css/index.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/css/detail.css" />
+    <link href="/lib/layui-v2.5.5/css/layui.css">
+</head>
+
+<body class="home blog custom-background round-avatars" itemscope itemtype="http://schema.org/Organization">
+
+<div id="main" class="content">
+    <div class="container">
+        <article id="post-1202" class="js-gallery post-1202 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized tag-11 tag-22 tag-29">
+            <style>
+                .container {
+                    padding: 10px 0;
+                }
+
+                .post {
+                    margin: 0 auto;
+                }
+            </style>
+            <section class="post_content">
+                <div id='paper'></div>
+
+                <div class="meta split split--responsive cf">
+                    <div class="split__title">
+                        <time id="time"></time>
+                        <span class=""><a href="" rel="tag"></a> </span>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </div>
+
+    <svg id="upTriangleColor" width="100%" height="40" viewBox="0 0 100 102" preserveAspectRatio="none">
+        <path d="M0 0 L50 100 L100 0 Z"></path>
+    </svg>
+
+    <div id="panel">
+        <div class="comment-area">
+            <section class="comments">
+                <div class="comments-main">
+                    <div id="comments-list-title"><span id="comment_num"></span> 条评论 </div>
+                    <div id="loading-comments">
+                        <div class="host">
+                            <div class="loading loading-0"></div>
+                            <div class="loading loading-1"></div>
+                            <div class="loading loading-2"></div>
+                        </div>
+                    </div>
+                    <ul id="comment_wrap" class="commentwrap">
+                    </ul>
+
+                    <div style="margin: 2px; padding: 3px;">
+                        <div id="page"></div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </div>
+    <svg id="dwTriangleColor" width="100%" height="40" viewBox="0 0 100 102" preserveAspectRatio="none">
+        <path d="M0 0 L50 100 L100 0 Z"></path>
+    </svg>
+    <div class="wrapper">
+    </div>
+</div>
+
+
+<footer id="footer" class="overlay animated from-top">
+    <script type='text/javascript' src='/js/jquery.min.js'></script>
+    <script type='text/javascript' src='/js/plugins.js'></script>
+    <script type='text/javascript' src='/js/script.js'></script>
+    <script type='text/javascript' src='/js/particles.js'></script>
+    <script type='text/javascript' src='/js/aos.js'></script>
+    <script type='text/javascript' src='/js/prism.js'></script>
+    <script src="/js/util.js"></script>
+    <script src="/lib/layui-v2.5.5/layui.js"></script>
+    <script src="//cdn.bootcdn.net/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <script>
+        layui.use(['laypage', 'layer', 'form'], function () {
+            var laypage = layui.laypage,
+                $ = layui.$,
+                count = 0;
+
+            var sess = '<header class="post_header"><h1 class="post_title">{0}</h1></header>' +
+                '<div class="post-body js-gallery">{1}</div>';
+
+            var comment = '<li class="comment even thread-even depth-1" id="li-comment-">' +
+                '<div id="comment-969" class="comment_body contents"><div class="profile">' +
+                '<a href="">' +
+                '<img src="{0}" class="gravatar">' +
+                '</a></div><div class="main shadow"><div class="commentinfo">' +
+                '<section class="commeta"><div class="shang">' +
+                '<h4 class="author"><a href="" target="_blank">' +
+                '<img src="./images/9cc50a9e422fb1c89aebafeb959cef7a.jpg" ' +
+                'class="gravatarsmall">{1}</a></h4></div></section></div>' +
+                '<div class="body"><p>{2}</p></div><div class="xia info">' +
+                '<span><time>{3}</time></span>' +
+                '</div></div></div></li>';
+
+            var cid = getQueryString('cid');
+
+            MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+
+            $.ajax({
+                url: "/content/getContentByCid",
+                method: "GET",
+                data: {"cid": cid},
+                success: function (res) {
+                    var paper = res.content;
+                    $("#t").text(paper.title);
+                    $("#paper")[0].innerHTML = sess.format(paper.title, paper.text);
+                    $("#comment_num").text(paper.commentNum);
+                    $("#time").attr("datetime", paper.modified);
+                    $("#time").text(paper.modified);
+                    if(paper.commentNum === 0)
+                        $("#page").attr("style", "display: none;")
+                    // MathJax.typeset();
+                    var math = document.getElementById("paper");
+                    MathJax.Hub.Queue(["Typeset", MathJax.Hub, math]);
+                },
+                error: function (res) {
+                    console.error('发生错误'+res);
+                }
+            });
+
+
+            $.ajax({
+                url: "/comment/getCommentByPage",
+                method: "GET",
+                async: false,
+                data: {"cid": cid, "page": 1, "limit": 5},
+                success: function (res) {
+                    var html = '';
+                    count = res.data.count;
+                    for (var i = 0; i < res.data.length; i++) {
+                        var img = 'http://cn.gravatar.com/avatar/' +
+                            hex_md5(res.data[i].email) + 's=60&d=identicon&r=G';
+                        html += comment.format(img, res.data[i].author,
+                            res.data[i].text, res.data[i].created);
+                    }
+                    $("#comment_wrap")[0].innerHTML = html;
+                },
+                error: function (res) {
+                    console.error((res));
+                }
+            });
+
+            laypage.render({
+                elem: 'page',
+                count: 20,
+                limit: 5,
+                layout: ['prev', 'next'],
+                jump: function (obj, first) {
+                    if (!first) {
+                        $.ajax({
+                            url: "/comment/getCommentByPage",
+                            method: "GET",
+                            async: false,
+                            data: {"cid": cid, "page": obj.curr, "limit": obj.limit},
+                            success: function (res) {
+                                var html = '';
+                                count = res.data.count;
+                                for (var i = 0; i < res.data.length; i++)
+                                    html += comment.format(res.data[i].author, res.data[i].text, res.data[i].created);
+                                $("#comment_wrap")[0].innerHTML = html;
+                            },
+                            error: function (res) {
+                                console.error((res));
+                            }
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</footer>
+
+</body>
+
+</html>
